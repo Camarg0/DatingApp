@@ -1,15 +1,18 @@
+using API.Controllers;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")] // /api/users ([controller] in this case indicates the name of that comes before the Controller syntax)
-public class UsersController(DataContext context) : ControllerBase
+// [Authorize] in this case would apply the attribute to all the methods here, unless a specific method has [AllowAnonymous], that would overwrite it
+// [Route("api/[controller]")] /api/users ([controller] in this case indicates the name of that comes before the Controller syntax)
+public class UsersController(DataContext context) : BaseApiController
 {
     // When specifying the type in dotnet, we use the angled brackets <>
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -22,6 +25,7 @@ public class UsersController(DataContext context) : ControllerBase
     }
 
     // I can't create another Get for the same route, unless I specify more the get route like this
+    [Authorize] // Authorize means that it needs authentication (in this case from a token)
     [HttpGet("{id:int}")]  // api/users/3
     public async Task<ActionResult<AppUser>> GetUsers(int id)
     {

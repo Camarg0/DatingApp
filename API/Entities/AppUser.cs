@@ -1,4 +1,6 @@
-﻿namespace API.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace API.Entities;
 
 //Each Entity represents a Table
 public class AppUser
@@ -10,4 +12,9 @@ public class AppUser
 
     //Required is a modifier added in dotnet, so we cannot create an AppUser without a UserName. It is used in strings and other reference types
     public required string UserName { get; set; }
+
+    //For authentication, we're gonna make something really basic firstly, with the use of passwordhash and password salt
+    public required byte[] PasswordHash { get; set; }
+
+    public required byte[] PasswordSalt { get; set; }
 }
