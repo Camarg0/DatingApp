@@ -17,7 +17,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
     // If we use an object instead of primitive types, the username and password will need to be passed in the body of the request so it can work.
     // We can use [FromBody] just before the parameter name in the function too. But the resolution used below is more conventional in C#, so that's why the parameter function is a DTO.
 
-    [HttpPost("register")] // path: account/register
+    [HttpPost("register")] // path: api/account/register
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
 
         if (await UserExists(registerDto.Username)) return BadRequest("This username already exists");
@@ -43,7 +43,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         };
     }
 
-    [HttpPost("login")]
+    [HttpPost("login")] // path: api/account/login
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto){
         // First thing when logging is verifying if the user exists in the DB
         var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
