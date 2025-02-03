@@ -1,22 +1,27 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">DatingApp</a>\
+        <!-- The routerLink must be the same as the specified in app.routes.ts, the routerlinkActive is refered to the hover -->
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">DatingApp</a>
 
-        @if (accountService.currentUser()) {
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            @if (accountService.currentUser()) {
             <li class="nav-item">
-                <a class="nav-link">Matches</a>
+                <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Lists</a>
+                <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Messages</a>
+                <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
             </li>
+            }
         </ul>
 
+        @if (accountService.currentUser()) {
         <div dropdown class="dropdown">
-            <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
+            <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+                Welcome {{accountService.currentUser()?.username | titlecase}}
+            </a>
             <div *dropdownMenu class="dropdown-menu">
                 <a class="dropdown-item">Edit profile</a>
                 <div class="dropdown-divider"></div>
@@ -24,6 +29,7 @@
             </div>
         </div>
         }
+
 
         @if (!accountService.currentUser()) {
         <!-- 
@@ -36,7 +42,7 @@
             <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username">
             <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="Password"
                 type="password">
-            <button class="btn btn-outline-success" type="submit">Login</button>
+            <button class="btn btn-success" type="submit">Login</button>
         </form>
         }
     </div>
