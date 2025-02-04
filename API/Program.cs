@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,10 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
+
+
+// Middleware create for handling errors
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Cors is basically a policy to allow certain domains (origins) that are different than the domain of my API server to access the API and make the requests.
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()

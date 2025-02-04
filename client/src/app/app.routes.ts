@@ -5,6 +5,9 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
+import { TestErrorsComponent } from './_errors/test-errors/test-errors.component';
+import { NotFoundComponent } from './_errors/not-found/not-found.component';
+import { ServerErrorComponent } from './_errors/server-error/server-error.component';
 
 // Routes that are used to navegate between different components with different routes, using RouterOutlet
 export const routes: Routes = [
@@ -21,6 +24,9 @@ export const routes: Routes = [
             { path: 'messages', component: MessagesComponent },
         ]
     },
+    { path: 'errors', component: TestErrorsComponent},
+    { path: 'not-found', component: NotFoundComponent},
+    { path: 'server-error', component: ServerErrorComponent},
     // When it doesn't find the route in the route list, it loads HomeComponent
     { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
