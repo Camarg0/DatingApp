@@ -29,6 +29,11 @@ public static class ApplicationServiceExtensions
         // Specifying the ITokenService resolves it via ITokenService which decouples code, allowing switching implementations with way better testability too. Passing just the TokenService is possible but it makes the service tied to an specific implementation.
         services.AddScoped<ITokenService, TokenService>();
 
+        services.AddScoped<IUserRepository, UserRepository>();
+        
+        // Is gonna look inside the assembly and register all automapper profiles that I'm creating
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         return services;
     }
 }

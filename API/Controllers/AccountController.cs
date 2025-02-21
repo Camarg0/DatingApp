@@ -17,31 +17,31 @@ public class AccountController(DataContext context, ITokenService tokenService) 
     // If we use an object instead of primitive types, the username and password will need to be passed in the body of the request so it can work.
     // We can use [FromBody] just before the parameter name in the function too. But the resolution used below is more conventional in C#, so that's why the parameter function is a DTO.
 
-    [HttpPost("register")] // path: api/account/register
-    public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
+    // [HttpPost("register")] // path: api/account/register
+    // public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto){
 
-        if (await UserExists(registerDto.Username)) return BadRequest("This username already exists");
+    //     if (await UserExists(registerDto.Username)) return BadRequest("This username already exists");
 
-        // Using hmac to hash the password
-        using var hmac = new HMACSHA512();
+    //     // Using hmac to hash the password
+    //     using var hmac = new HMACSHA512();
 
-        var user = new AppUser {
-            UserName = registerDto.Username,
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key
-        };
+    //     var user = new AppUser {
+    //         UserName = registerDto.Username,
+    //         PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+    //         PasswordSalt = hmac.Key
+    //     };
 
-        // Adding an user using the dbcontext
-        context.Users.Add(user);
+    //     // Adding an user using the dbcontext
+    //     context.Users.Add(user);
         
-        // Awaiting to save successfully
-        await context.SaveChangesAsync();
+    //     // Awaiting to save successfully
+    //     await context.SaveChangesAsync();
 
-        return new UserDto {
-            Username = user.UserName,
-            Token = tokenService.CreateToken(user)
-        };
-    }
+    //     return new UserDto {
+    //         Username = user.UserName,
+    //         Token = tokenService.CreateToken(user)
+    //     };
+    // }
 
     [HttpPost("login")] // path: api/account/login
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto){

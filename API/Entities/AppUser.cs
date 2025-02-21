@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using API.Extensions;
 
 namespace API.Entities;
 
@@ -14,7 +14,35 @@ public class AppUser
     public required string UserName { get; set; }
 
     //For authentication, we're gonna make something really basic firstly, with the use of passwordhash and password salt
-    public required byte[] PasswordHash { get; set; }
+    public byte[] PasswordHash { get; set; } = [];
 
-    public required byte[] PasswordSalt { get; set; }
+    public byte[] PasswordSalt { get; set; } = [];
+
+    public DateOnly DateOfBirth { get; set; }
+
+    public required string KnownAs { get; set; }
+
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+
+    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+
+    public required string Gender { get; set; }
+
+    public string? Introduction { get; set; }
+
+    public string? Interests { get; set; }
+
+    public string? LookingFor { get; set; }
+
+    public required string City { get; set; }
+
+    public required string Country { get; set; }
+
+    // Here the Entity Framework creates the table automatically for Photos, because this property is interpreted as a navigation property. This means that EF recognizes the relationship between the table User and Photos
+    public List<Photo> Photos { get; set; } = [];
+
+    // The method must have the Get in the name for the AutoMapper understanding
+    // public int GetAge(){
+    //     return DateTimeExtensions.CalculateAge(DateOfBirth);
+    // }
 }
